@@ -6,7 +6,18 @@
  * @return {Array}
  */
 
-var getAllUsernames;
+var getAllUsernames = function (obj){
+  var newArr = [];
+  //console.log(obj.data.id[1].username);
+  var users = obj.data.id;
+  //console.log(users);
+  for(var i in users){
+    //console.log(users[i]);
+    //console.log(users[i].username);
+    newArr.push(users[i].username);
+  }
+  return newArr;
+}
 
 /* #hometownCity
  *
@@ -16,7 +27,13 @@ var getAllUsernames;
  * @return {String}
  */
 
-var hometownCity;
+var hometownCity = function (arr){
+  
+    //console.log(arr);
+    for(var i = 0; i < arr.length; i++){
+      return arr[i].hometown.state.montana.city
+    }
+  }
 
 /* #usersCurrentState
  *
@@ -27,7 +44,29 @@ var hometownCity;
  * @return {Object}
  */
 
-var usersCurrentState;
+var usersCurrentState = function (data,usernames){
+  
+  //console.log(data)
+ 
+  //console.log(data[0])
+ 
+  //console.log(data[0][0])
+  
+   //console.log(data[0][0].hometown.state);
+   //console.log(usernames);
+   //var hometown = data[0][0].hometown.state
+   //console.log(hometown);
+   //console.log(data);
+   var obj = {};
+   for(var i = 0; i < usernames.length; i++){
+     //console.log(data[i][[1]])
+     obj[usernames[i]] = data[i][1].currentLocation.state
+   }
+ 
+ 
+ 
+   return obj;
+ }
 
 /* #findAdmin
  *
@@ -37,7 +76,17 @@ var usersCurrentState;
  * @return {String}
  */
 
-var findAdmin;
+var findAdmin = function (obj){
+  //console.log(obj.data.id);
+
+  var test = obj.data.id
+  for(var key in test){
+    //console.log(test[key].admin);
+    if(test[key].admin === true){
+      return test[key].username;
+    }
+  }
+}
 
 /* #addNewMovie
  *
@@ -49,7 +98,21 @@ var findAdmin;
  * @return {Array}
  */
 
-var addNewMovie;
+var addNewMovie = function (obj1,num,str){
+  //console.log(obj1.data.id);
+  var temp = obj1.data.id[2].favoriteMovies;;
+  //console.log(temp);
+  //temp is an object with keys 1,2,3
+  var arr = [];
+  for(var key in temp){
+    //console.log(temp[key].favoriteMovies);
+    //console.log(temp[key]);
+    arr.push(temp[key]);
+  }
+  arr.push(str);
+  //console.log(arr);
+  return arr;
+}
 
 /* #favoriteBooks
  *
@@ -59,7 +122,21 @@ var addNewMovie;
  * @return {Array}
  */
 
-var favoriteBooks;
+var favoriteBooks = function (obj){
+  
+    //console.log(obj.data.id[1]);
+    var lair = obj.data.id;
+    //console.log(obj.data.id);
+    var bookObj = {};
+  
+    for(var key in lair){
+      //console.log(lair[key].favoriteBook.author);
+      //console.log(lair[key].favoriteBook.title);
+      bookObj[lair[key].favoriteBook.author] = lair[key].favoriteBook.title;
+    }
+    //console.log(bookObj);
+    return [bookObj];
+  }
 
 /* #countTracks
  *
@@ -69,7 +146,15 @@ var favoriteBooks;
  * @return {Number}
  */
 
-var countTracks;
+var countTracks = function (obj){
+
+  //console.log(obj);
+  for(var key in obj){
+    //console.log(obj[key].tracks);
+    //Object.keys(myObj).length
+    return Object.keys(obj[key].tracks).length;
+  }
+}
 
 /* #fullTimeStatus
  *
@@ -80,7 +165,14 @@ var countTracks;
  * @return {Object}
  */
 
-var fullTimeStatus;
+var fullTimeStatus = function (obj,str){
+  for(var key in obj){
+    if(key === str){
+      obj[str][0].fullTime.offered = true;
+      return obj[str][0].fullTime;
+    } 
+  }
+}
 
 /* #newTrack
  *
@@ -92,7 +184,12 @@ var fullTimeStatus;
  * @return {Object}
  */
 
-var newTrack;
+var newTrack = function (obj,arr,str){
+  for(var i = 0; i < arr.length; i++){
+    obj[str] = arr[i];
+  }
+  return obj;
+}
 
 /* #bigDataTrack
  *
@@ -103,7 +200,22 @@ var newTrack;
  * @return {Object }
  */
 
-var bigDataTrack;
+var bigDataTrack = function(data,trackName){
+
+  //console.log(data.tracks.bigData);
+
+  var temp = data.tracks[trackName][0].fullTime;
+  temp.offered = true;
+  //console.log(temp);
+  //console.log(temp.currentStudents);
+  temp.currentStudents = 10;
+  //console.log(trackName)
+  //console.log(temp);
+  obj = {};
+  obj[trackName] = temp;
+  console.log(obj);
+  return obj;
+}
 
 /* #incrementAge
  *
@@ -440,16 +552,16 @@ var getPrices;
 var addName;
 
 module.exports = {
-  getAllUsernames: null,
-  hometownCity: null,
-  usersCurrentState: null,
-  findAdmin: null,
-  addNewMovie: null,
-  favoriteBooks: null,
-  countTracks: null,
-  newTrack: null,
-  fullTimeStatus: null,
-  bigDataTrack: null,
+  getAllUsernames: getAllUsernames,
+  hometownCity: hometownCity,
+  usersCurrentState: usersCurrentState,
+  findAdmin: findAdmin,
+  addNewMovie: addNewMovie,
+  favoriteBooks: favoriteBooks,
+  countTracks: countTracks,
+  newTrack: newTrack,
+  fullTimeStatus: fullTimeStatus,
+  bigDataTrack: bigDataTrack,
   incrementAge: null,
   movieRatings: null,
   sumOfAllStudents: null,
