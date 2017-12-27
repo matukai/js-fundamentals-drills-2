@@ -99,21 +99,11 @@ var findAdmin = function (obj){
  * @return {Array}
  */
 
-var addNewMovie = function (obj1,num,str){
-  //console.log(obj1.data.id);
-  var temp = obj1.data.id[2].favoriteMovies;;
-  //console.log(temp);
-  //temp is an object with keys 1,2,3
-  var arr = [];
-  for(var key in temp){
-    //console.log(temp[key].favoriteMovies);
-    //console.log(temp[key]);
-    arr.push(temp[key]);
-  }
-  arr.push(str);
-  //console.log(arr);
-  return arr;
-}
+var addNewMovie = function (obj, num, str){
+  var array = obj.data.id[num].favoriteMovies;
+  array.push(str);
+  return array;
+} 
 
 /* #favoriteBooks
  *
@@ -252,14 +242,14 @@ var incrementAge = function(value,key){
  */
 
 var movieRatings = function movieRatings (arr,value){
-  var result = {};
+    var result = {};
   
     for (var i=0; i<arr.length; i++){
       for (var j=0; j<arr[i].length; j++){
           result[arr[i][j]] = value[j];
           }
         }
-        //return result;
+    return result;
 }
 
 
@@ -457,8 +447,28 @@ var getAgeById = function (obj){
  * @return {Array}
  */
 
-var allTheStates = function (){
+var allTheStates = function (obj){
+  let arr = [];
   
+  for(var i = 0; i < obj.length; i++){
+    //console.log(obj[i].citiesLived[0].hometown.state);
+    let temp = obj[i].citiesLived[0].hometown.state;
+
+    //console.log(obj[i].citiesLived[1].currentLocation.state);
+    let temp2 = obj[i].citiesLived[1].currentLocation.state;
+    //console.log(temp);
+    //console.log(temp2);
+    for(var j in temp){
+      //console.log(j)
+      arr.push(j);
+    }
+    for(var k in temp2){
+      //console.log(k)
+      arr.push(k);
+    }
+  }
+  //console.log(arr);
+  return arr;
 }
 
 /* #allTheMovies
@@ -469,7 +479,22 @@ var allTheStates = function (){
  * @return {Array}
  */
 
-var allTheMovies;
+var allTheMovies = function (obj){
+  //console.log(obj);
+  let arr = [];
+
+  for(var i = 0; i < obj.length; i++){
+    let temp1 = obj[i].favoriteMovies;
+    //console.log(temp1);
+
+    for(var j = 0; j < temp1.length; j++){
+      //console.log(temp1[j]);
+      arr.push(temp1[j]);
+    }
+  }
+  //console.log(arr);
+  return arr;
+}
 
 /* #addCoffeeFlavor
  *
@@ -480,7 +505,24 @@ var allTheMovies;
  * @return {Object}
  */
 
-var addCoffeeFlavor;
+var addCoffeeFlavor = function (obj,str){
+
+  //console.log(obj.kona.flavors);
+  let update = {};
+
+  for(var i in obj){
+    //console.log(i);
+    //console.log(obj[i].flavors);
+    update[i] = obj[i].flavors
+  }
+  //console.log(update);
+  for(var j in update){
+    //console.log(update[j]);
+    update[j].push(str);
+  }
+  //console.log(update);
+  return update;
+}
 
 /* #avgCoffeePrice
  *
@@ -492,7 +534,10 @@ var addCoffeeFlavor;
  * 
  */
 
-var avgCoffeePrice;
+var avgCoffeePrice = function(obj,num){
+  console.log(obj);
+  console.log(num);
+}
 
 /* #updateBakedGoodsPrice
  *
@@ -711,10 +756,10 @@ module.exports = {
   phoneNumber: phoneNumber,
   reverseStrings: reverseStrings,
   getAgeById: getAgeById,
-  allTheStates: null,
-  allTheMovies: null,
-  addCoffeeFlavor: null,
-  avgCoffeePrice: null,
+  allTheStates: allTheStates,
+  allTheMovies: allTheMovies,
+  addCoffeeFlavor: addCoffeeFlavor,
+  avgCoffeePrice: avgCoffeePrice,
   updateBakedGoodsPrice: null,
   costOfCoffeeOnOrder: null,
   uniqueCoffeeFlavors: null,
