@@ -6,7 +6,19 @@
  * @return {Array}
  */
 
-var getAllUsernames;
+var getAllUsernames = function (obj){
+  //console.log(obj)
+  var newArr = [];
+  //console.log(obj.data.id[1].username);
+  var users = obj.data.id;
+  //console.log(users);
+  for(var i in users){
+    //console.log(users[i]);
+    //console.log(users[i].username);
+    newArr.push(users[i].username);
+  }
+  return newArr;
+}
 
 /* #hometownCity
  *
@@ -16,7 +28,13 @@ var getAllUsernames;
  * @return {String}
  */
 
-var hometownCity;
+var hometownCity = function (arr){
+  
+    //console.log(arr);
+    for(var i = 0; i < arr.length; i++){
+      return arr[i].hometown.state.montana.city
+    }
+  }
 
 /* #usersCurrentState
  *
@@ -27,7 +45,29 @@ var hometownCity;
  * @return {Object}
  */
 
-var usersCurrentState;
+var usersCurrentState = function (data,usernames){
+  
+  //console.log(data)
+ 
+  //console.log(data[0])
+ 
+  //console.log(data[0][0])
+  
+   //console.log(data[0][0].hometown.state);
+   //console.log(usernames);
+   //var hometown = data[0][0].hometown.state
+   //console.log(hometown);
+   //console.log(data);
+   var obj = {};
+   for(var i = 0; i < usernames.length; i++){
+     //console.log(data[i][[1]])
+     obj[usernames[i]] = data[i][1].currentLocation.state
+   }
+ 
+ 
+ 
+   return obj;
+ }
 
 /* #findAdmin
  *
@@ -37,7 +77,17 @@ var usersCurrentState;
  * @return {String}
  */
 
-var findAdmin;
+var findAdmin = function (obj){
+  //console.log(obj.data.id);
+
+  var test = obj.data.id
+  for(var key in test){
+    //console.log(test[key].admin);
+    if(test[key].admin === true){
+      return test[key].username;
+    }
+  }
+}
 
 /* #addNewMovie
  *
@@ -49,7 +99,11 @@ var findAdmin;
  * @return {Array}
  */
 
-var addNewMovie;
+var addNewMovie = function (obj, num, str){
+  var array = obj.data.id[num].favoriteMovies;
+  array.push(str);
+  return array;
+} 
 
 /* #favoriteBooks
  *
@@ -59,7 +113,21 @@ var addNewMovie;
  * @return {Array}
  */
 
-var favoriteBooks;
+var favoriteBooks = function (obj){
+  
+    //console.log(obj.data.id[1]);
+    var lair = obj.data.id;
+    //console.log(obj.data.id);
+    var bookObj = {};
+  
+    for(var key in lair){
+      //console.log(lair[key].favoriteBook.author);
+      //console.log(lair[key].favoriteBook.title);
+      bookObj[lair[key].favoriteBook.author] = lair[key].favoriteBook.title;
+    }
+    //console.log(bookObj);
+    return [bookObj];
+  }
 
 /* #countTracks
  *
@@ -69,7 +137,15 @@ var favoriteBooks;
  * @return {Number}
  */
 
-var countTracks;
+var countTracks = function (obj){
+
+  //console.log(obj);
+  for(var key in obj){
+    //console.log(obj[key].tracks);
+    //Object.keys(myObj).length
+    return Object.keys(obj[key].tracks).length;
+  }
+}
 
 /* #fullTimeStatus
  *
@@ -80,7 +156,14 @@ var countTracks;
  * @return {Object}
  */
 
-var fullTimeStatus;
+var fullTimeStatus = function (obj,str){
+  for(var key in obj){
+    if(key === str){
+      obj[str][0].fullTime.offered = true;
+      return obj[str][0].fullTime;
+    } 
+  }
+}
 
 /* #newTrack
  *
@@ -92,7 +175,12 @@ var fullTimeStatus;
  * @return {Object}
  */
 
-var newTrack;
+var newTrack = function (obj,arr,str){
+  for(var i = 0; i < arr.length; i++){
+    obj[str] = arr[i];
+  }
+  return obj;
+}
 
 /* #bigDataTrack
  *
@@ -103,7 +191,22 @@ var newTrack;
  * @return {Object }
  */
 
-var bigDataTrack;
+var bigDataTrack = function(data,trackName){
+
+  //console.log(data.tracks.bigData);
+
+  var temp = data.tracks[trackName][0].fullTime;
+  temp.offered = true;
+  //console.log(temp);
+  //console.log(temp.currentStudents);
+  temp.currentStudents = 10;
+  //console.log(trackName)
+  //console.log(temp);
+  obj = {};
+  obj[trackName] = temp;
+  //console.log(obj);
+  return obj;
+}
 
 /* #incrementAge
  *
@@ -114,7 +217,20 @@ var bigDataTrack;
  * @return {Object}
  */
 
-var incrementAge;
+var incrementAge = function(value,key){
+  //console.log(value);
+  //console.log(key);
+  var obj = {};
+
+  for(var i = 0; i < value.length; i++){
+    //console.log(key[i]);
+    //console.log(value[i]);
+    obj[key[i]]  = ( value[i] + 1) + " years old";
+  }
+  //console.log(obj);
+  return obj;
+
+}
 
 /* #movieRatings
  *
@@ -125,7 +241,17 @@ var incrementAge;
  * @return {Object}
  */
 
-var movieRatings;
+var movieRatings = function movieRatings (arr,value){
+    var result = {};
+  
+    for (var i=0; i<arr.length; i++){
+      for (var j=0; j<arr[i].length; j++){
+          result[arr[i][j]] = value[j];
+          }
+        }
+    return result;
+}
+
 
 /* #sumOfAllStudents
  *
@@ -134,8 +260,40 @@ var movieRatings;
  * @param {Object}
  * @return {Number}
  */
+ 
+var sumOfAllStudents = function (obj){
+  // find amount of students in x track fullTime
+  //console.log(obj.javascript[0].fullTime.currentStudents);
+  //find amount of students in x track partTime
 
-var sumOfAllStudents;
+  //add them together in sum
+
+  //console.log(obj.javascript[1].partTime)
+  //console.log(obj.cyberSecurity)
+  //console.log(obj.bigData)
+  //console.log(obj.enterprise)
+
+  var count = 0;
+
+
+  for(var i in obj){
+    //console.log(i);
+    //console.log(obj[i][0]);
+    //console.log(obj[i][0].fullTime.currentStudents);
+
+
+    var full = obj[i][0].fullTime.currentStudents;
+    //console.log(full);
+    count = count + full;
+
+    var part = obj[i][1].partTime.currentStudents;
+    //console.log(part);
+    count = count + part;
+
+  }
+//console.log(count);
+return count;
+}
 
 /* #mapLanguageToCreator
  *
@@ -147,7 +305,18 @@ var sumOfAllStudents;
  * @return {Object}
  */
 
-var mapLanguageToCreator;
+var mapLanguageToCreator = function (data,names,year){
+  //console.log(data);
+  var obj = {};
+  for(var i in data){
+    //console.log(i)
+    if(data[i].yearCreated === year){
+      obj[data[i].createdBy] = i;
+    }
+  }
+  //console.log(obj);
+  return obj;
+}
 
 /* #mapOccurrences
  *
@@ -157,7 +326,18 @@ var mapLanguageToCreator;
  * @return {Object}
  */
 
-var mapOccurrences;
+var mapOccurrences = function (data){
+  var obj = {};
+  for(var i in data){
+    let year = data[i].yearCreated;
+    if(obj.hasOwnProperty(year)){
+      obj[year]++;
+    }else{
+      obj[year] = 1;
+    }
+  }
+  return obj;
+}
 
 /* #countLanguages
  *
@@ -167,7 +347,11 @@ var mapOccurrences;
  * @return {Number}
  */
 
-var countLanguages;
+var countLanguages = function (obj){
+  //console.log(obj);
+  var size = Object.keys(obj).length;
+  return size;
+}
 
 /* #phoneNumber
  *
@@ -177,7 +361,27 @@ var countLanguages;
  * @return {Array}
  */
 
-var phoneNumber;
+var phoneNumber = function (str){
+  var arr = str.split('');
+
+
+  var index1 = arr.indexOf('(');
+  arr.splice(index1,1);
+  var index2 = arr.indexOf(')');
+  arr.splice(index2,1);
+  var index3 = arr.indexOf(" ");
+  arr.splice(index3,1);
+  var index4 = arr.indexOf("-");
+  arr.splice(index4,1);
+
+
+  var newArr = [];
+  for(var i = 0; i < arr.length; i++){
+   var num = parseInt(arr[i]);
+   newArr.push(num);
+  }
+  return newArr;
+}
 
 /* #phoneNumber
  *
@@ -187,7 +391,19 @@ var phoneNumber;
  * @return {Array}
  */
 
-var reverseStrings;
+var reverseStrings = function (obj){
+
+  //console.log(obj.devLeague.tracks);
+  let temp = obj.devLeague.tracks;
+  let arr = [];
+  for(var i in temp){
+    var splitString = i.split("");
+    var reverseArray = splitString.reverse();
+    var joinArray = reverseArray.join("");
+    arr.push(joinArray);
+  }
+  return arr;
+}
 
 /* #getAgeById
  *
@@ -197,7 +413,31 @@ var reverseStrings;
  * @return {Array}
  */
 
-var getAgeById;
+var getAgeById = function (obj){
+  
+  let temp = obj.data.id;
+  let userAges = [];
+
+  for(var i in temp){
+    let arr = [];
+   // console.log(temp[i].username);
+    arr.push(temp[i].username);
+    //console.log(temp[i].age);
+    arr.push(temp[i].age);
+    userAges.push(arr);
+  }
+  //console.log(userAges);
+  //return userAges;
+
+  var user3Age = [];
+  user3Age.push(temp[3].username);
+  user3Age.push(temp[3].age);
+  //console.log(user3Age);
+  return user3Age;
+
+
+
+}
 
 /* #allTheStates
  *
@@ -207,7 +447,29 @@ var getAgeById;
  * @return {Array}
  */
 
-var allTheStates;
+var allTheStates = function (obj){
+  let arr = [];
+  
+  for(var i = 0; i < obj.length; i++){
+    //console.log(obj[i].citiesLived[0].hometown.state);
+    let temp = obj[i].citiesLived[0].hometown.state;
+
+    //console.log(obj[i].citiesLived[1].currentLocation.state);
+    let temp2 = obj[i].citiesLived[1].currentLocation.state;
+    //console.log(temp);
+    //console.log(temp2);
+    for(var j in temp){
+      //console.log(j)
+      arr.push(j);
+    }
+    for(var k in temp2){
+      //console.log(k)
+      arr.push(k);
+    }
+  }
+  //console.log(arr);
+  return arr;
+}
 
 /* #allTheMovies
  *
@@ -217,7 +479,22 @@ var allTheStates;
  * @return {Array}
  */
 
-var allTheMovies;
+var allTheMovies = function (obj){
+  //console.log(obj);
+  let arr = [];
+
+  for(var i = 0; i < obj.length; i++){
+    let temp1 = obj[i].favoriteMovies;
+    //console.log(temp1);
+
+    for(var j = 0; j < temp1.length; j++){
+      //console.log(temp1[j]);
+      arr.push(temp1[j]);
+    }
+  }
+  //console.log(arr);
+  return arr;
+}
 
 /* #addCoffeeFlavor
  *
@@ -228,7 +505,24 @@ var allTheMovies;
  * @return {Object}
  */
 
-var addCoffeeFlavor;
+var addCoffeeFlavor = function (obj,str){
+
+  //console.log(obj.kona.flavors);
+  let update = {};
+
+  for(var i in obj){
+    //console.log(i);
+    //console.log(obj[i].flavors);
+    update[i] = obj[i].flavors
+  }
+  //console.log(update);
+  for(var j in update){
+    //console.log(update[j]);
+    update[j].push(str);
+  }
+  //console.log(update);
+  return update;
+}
 
 /* #avgCoffeePrice
  *
@@ -240,7 +534,10 @@ var addCoffeeFlavor;
  * 
  */
 
-var avgCoffeePrice;
+var avgCoffeePrice = function(obj,num){
+  console.log(obj);
+  console.log(num);
+}
 
 /* #updateBakedGoodsPrice
  *
@@ -440,29 +737,29 @@ var getPrices;
 var addName;
 
 module.exports = {
-  getAllUsernames: null,
-  hometownCity: null,
-  usersCurrentState: null,
-  findAdmin: null,
-  addNewMovie: null,
-  favoriteBooks: null,
-  countTracks: null,
-  newTrack: null,
-  fullTimeStatus: null,
-  bigDataTrack: null,
-  incrementAge: null,
-  movieRatings: null,
-  sumOfAllStudents: null,
-  mapLanguageToCreator: null,
-  mapOccurrences: null,
-  countLanguages: null,
-  phoneNumber: null,
-  reverseStrings: null,
-  getAgeById: null,
-  allTheStates: null,
-  allTheMovies: null,
-  addCoffeeFlavor: null,
-  avgCoffeePrice: null,
+  getAllUsernames: getAllUsernames,
+  hometownCity: hometownCity,
+  usersCurrentState: usersCurrentState,
+  findAdmin: findAdmin,
+  addNewMovie: addNewMovie,
+  favoriteBooks: favoriteBooks,
+  countTracks: countTracks,
+  newTrack: newTrack,
+  fullTimeStatus: fullTimeStatus,
+  bigDataTrack: bigDataTrack,
+  incrementAge: incrementAge,
+  movieRatings: movieRatings,
+  sumOfAllStudents: sumOfAllStudents,
+  mapLanguageToCreator: mapLanguageToCreator,
+  mapOccurrences: mapOccurrences,
+  countLanguages: countLanguages,
+  phoneNumber: phoneNumber,
+  reverseStrings: reverseStrings,
+  getAgeById: getAgeById,
+  allTheStates: allTheStates,
+  allTheMovies: allTheMovies,
+  addCoffeeFlavor: addCoffeeFlavor,
+  avgCoffeePrice: avgCoffeePrice,
   updateBakedGoodsPrice: null,
   costOfCoffeeOnOrder: null,
   uniqueCoffeeFlavors: null,
