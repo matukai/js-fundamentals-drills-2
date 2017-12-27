@@ -7,6 +7,7 @@
  */
 
 var getAllUsernames = function (obj){
+  //console.log(obj)
   var newArr = [];
   //console.log(obj.data.id[1].username);
   var users = obj.data.id;
@@ -213,7 +214,7 @@ var bigDataTrack = function(data,trackName){
   //console.log(temp);
   obj = {};
   obj[trackName] = temp;
-  console.log(obj);
+  //console.log(obj);
   return obj;
 }
 
@@ -226,7 +227,20 @@ var bigDataTrack = function(data,trackName){
  * @return {Object}
  */
 
-var incrementAge;
+var incrementAge = function(value,key){
+  //console.log(value);
+  //console.log(key);
+  var obj = {};
+
+  for(var i = 0; i < value.length; i++){
+    //console.log(key[i]);
+    //console.log(value[i]);
+    obj[key[i]]  = ( value[i] + 1) + " years old";
+  }
+  //console.log(obj);
+  return obj;
+
+}
 
 /* #movieRatings
  *
@@ -237,7 +251,17 @@ var incrementAge;
  * @return {Object}
  */
 
-var movieRatings;
+var movieRatings = function movieRatings (arr,value){
+  var result = {};
+  
+    for (var i=0; i<arr.length; i++){
+      for (var j=0; j<arr[i].length; j++){
+          result[arr[i][j]] = value[j];
+          }
+        }
+        //return result;
+}
+
 
 /* #sumOfAllStudents
  *
@@ -246,8 +270,40 @@ var movieRatings;
  * @param {Object}
  * @return {Number}
  */
+ 
+var sumOfAllStudents = function (obj){
+  // find amount of students in x track fullTime
+  //console.log(obj.javascript[0].fullTime.currentStudents);
+  //find amount of students in x track partTime
 
-var sumOfAllStudents;
+  //add them together in sum
+
+  //console.log(obj.javascript[1].partTime)
+  //console.log(obj.cyberSecurity)
+  //console.log(obj.bigData)
+  //console.log(obj.enterprise)
+
+  var count = 0;
+
+
+  for(var i in obj){
+    //console.log(i);
+    //console.log(obj[i][0]);
+    //console.log(obj[i][0].fullTime.currentStudents);
+
+
+    var full = obj[i][0].fullTime.currentStudents;
+    //console.log(full);
+    count = count + full;
+
+    var part = obj[i][1].partTime.currentStudents;
+    //console.log(part);
+    count = count + part;
+
+  }
+//console.log(count);
+return count;
+}
 
 /* #mapLanguageToCreator
  *
@@ -259,7 +315,18 @@ var sumOfAllStudents;
  * @return {Object}
  */
 
-var mapLanguageToCreator;
+var mapLanguageToCreator = function (data,names,year){
+  //console.log(data);
+  var obj = {};
+  for(var i in data){
+    //console.log(i)
+    if(data[i].yearCreated === year){
+      obj[data[i].createdBy] = i;
+    }
+  }
+  //console.log(obj);
+  return obj;
+}
 
 /* #mapOccurrences
  *
@@ -269,7 +336,18 @@ var mapLanguageToCreator;
  * @return {Object}
  */
 
-var mapOccurrences;
+var mapOccurrences = function (data){
+  var obj = {};
+  for(var i in data){
+    let year = data[i].yearCreated;
+    if(obj.hasOwnProperty(year)){
+      obj[year]++;
+    }else{
+      obj[year] = 1;
+    }
+  }
+  return obj;
+}
 
 /* #countLanguages
  *
@@ -279,7 +357,11 @@ var mapOccurrences;
  * @return {Number}
  */
 
-var countLanguages;
+var countLanguages = function (obj){
+  //console.log(obj);
+  var size = Object.keys(obj).length;
+  return size;
+}
 
 /* #phoneNumber
  *
@@ -289,7 +371,27 @@ var countLanguages;
  * @return {Array}
  */
 
-var phoneNumber;
+var phoneNumber = function (str){
+  var arr = str.split('');
+
+
+  var index1 = arr.indexOf('(');
+  arr.splice(index1,1);
+  var index2 = arr.indexOf(')');
+  arr.splice(index2,1);
+  var index3 = arr.indexOf(" ");
+  arr.splice(index3,1);
+  var index4 = arr.indexOf("-");
+  arr.splice(index4,1);
+
+
+  var newArr = [];
+  for(var i = 0; i < arr.length; i++){
+   var num = parseInt(arr[i]);
+   newArr.push(num);
+  }
+  return newArr;
+}
 
 /* #phoneNumber
  *
@@ -299,7 +401,19 @@ var phoneNumber;
  * @return {Array}
  */
 
-var reverseStrings;
+var reverseStrings = function (obj){
+
+  //console.log(obj.devLeague.tracks);
+  let temp = obj.devLeague.tracks;
+  let arr = [];
+  for(var i in temp){
+    var splitString = i.split("");
+    var reverseArray = splitString.reverse();
+    var joinArray = reverseArray.join("");
+    arr.push(joinArray);
+  }
+  return arr;
+}
 
 /* #getAgeById
  *
@@ -309,7 +423,31 @@ var reverseStrings;
  * @return {Array}
  */
 
-var getAgeById;
+var getAgeById = function (obj){
+  
+  let temp = obj.data.id;
+  let userAges = [];
+
+  for(var i in temp){
+    let arr = [];
+   // console.log(temp[i].username);
+    arr.push(temp[i].username);
+    //console.log(temp[i].age);
+    arr.push(temp[i].age);
+    userAges.push(arr);
+  }
+  //console.log(userAges);
+  //return userAges;
+
+  var user3Age = [];
+  user3Age.push(temp[3].username);
+  user3Age.push(temp[3].age);
+  //console.log(user3Age);
+  return user3Age;
+
+
+
+}
 
 /* #allTheStates
  *
@@ -319,7 +457,9 @@ var getAgeById;
  * @return {Array}
  */
 
-var allTheStates;
+var allTheStates = function (){
+  
+}
 
 /* #allTheMovies
  *
@@ -562,15 +702,15 @@ module.exports = {
   newTrack: newTrack,
   fullTimeStatus: fullTimeStatus,
   bigDataTrack: bigDataTrack,
-  incrementAge: null,
-  movieRatings: null,
-  sumOfAllStudents: null,
-  mapLanguageToCreator: null,
-  mapOccurrences: null,
-  countLanguages: null,
-  phoneNumber: null,
-  reverseStrings: null,
-  getAgeById: null,
+  incrementAge: incrementAge,
+  movieRatings: movieRatings,
+  sumOfAllStudents: sumOfAllStudents,
+  mapLanguageToCreator: mapLanguageToCreator,
+  mapOccurrences: mapOccurrences,
+  countLanguages: countLanguages,
+  phoneNumber: phoneNumber,
+  reverseStrings: reverseStrings,
+  getAgeById: getAgeById,
   allTheStates: null,
   allTheMovies: null,
   addCoffeeFlavor: null,

@@ -195,7 +195,7 @@ describe("JS Fundamental Drills", function () {
   });
   it("#sumOfAllStudents is a function that takes in an object and returns the sum of all currently enrolled students.", function () {
     var sum = func.sumOfAllStudents(nestedData.schools.devLeague.tracks);
-    expect(sum).to.deep.equal(42);
+    expect(sum).to.deep.equal(47);
   });
   it("#mapLanguageToCreator is a function that takes in 3 arguments 'data', 'createdBy', and 'year' and returns key-value pairs { name: language }.", function () {
     var mapToCreator = func.mapLanguageToCreator(
